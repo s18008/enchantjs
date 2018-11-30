@@ -204,7 +204,7 @@ scene.backgroundColor  = "#A0D8EF";
              scene.addChild(Bom);
              Bomlist.push(Bom);
          }
-         if(game.frame % 600 == 0){//敵生成
+         if(game.frame % 60 == 0){//敵生成
              var Type = Math.floor( Math.random() * (3 + 1 - 1) ) + 1 ;//３種類の敵の中からランダムで決める
              if(Type == 1){
                 var Enemy = new enemy1();
@@ -216,7 +216,7 @@ scene.backgroundColor  = "#A0D8EF";
              scene.addChild(Enemy);
              enemylist.push(Enemy);
          }
-         if(game.frame > 60){//600フレーム過ぎたらクマの女の子を出す
+         if(game.frame > 600){//600フレーム過ぎたらクマの女の子を出す
              scene.addChild(girl);
          }
          if(bear.within(girl,20)){//女の子の当たり判定
