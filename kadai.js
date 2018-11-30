@@ -103,7 +103,6 @@ const enemy1 = Class.create(Sprite,{//敵の管理
 const enemy2 = Class.create(enemy1,{//ジャンプし続ける敵
     initialize : function(){
         enemy1.call(this);
-        //this.frame = 1;
         var gravity_enemy = 0;
         this.addEventListener('enterframe',function(){
         if(this.y < yuka+8){
@@ -121,7 +120,6 @@ const enemy2 = Class.create(enemy1,{//ジャンプし続ける敵
 const enemy3 = Class.create(enemy1,{//自機に合わせてジャンプする敵
     initialize : function(){
         enemy1.call(this);
-        //this.frame = 0;
         var gravity_enemy = 0;
         var enemy_junp = 0;
         this.addEventListener(Event.ENTER_FRAME, function(e) {
@@ -181,11 +179,18 @@ var gameover = function(){//ゲームオーバー画面の描写
     game.stop();
 }
 
+var gameclear = function(){//ゲームクリア画面の描写
+    var end = new Sprite(189,48);
+    end.image = game.assets['./assets/imags/clear.png']
+    scene.addChild(end);
+    game.stop();
+}
+
 window.onload = function(){
  game = new Game(300,300);
  scene = game.rootScene
 scene.backgroundColor  = "#A0D8EF";
- game.preload('./assets/imags/chara1.png','./assets/imags/mori.png','./assets/imags/chara6.png','./assets/imags/icon0.png','./assets/imags/effect0.png','./assets/imags/end.png','./assets/imags/ground.jpg');
+ game.preload('./assets/imags/chara1.png','./assets/imags/mori.png','./assets/imags/chara6.png','./assets/imags/icon0.png','./assets/imags/effect0.png','./assets/imags/end.png','./assets/imags/ground.jpg','./assets/imags/clear.png');
 
     game.onload = function(){
      var bear = new Bear();
@@ -199,8 +204,8 @@ scene.backgroundColor  = "#A0D8EF";
              scene.addChild(Bom);
              Bomlist.push(Bom);
          }
-         if(game.frame % 60 == 0){//敵生成
-             var Type = Math.floor( Math.random() * (3 + 1 - 1) ) + 1 ;
+         if(game.frame % 600 == 0){//敵生成
+             var Type = Math.floor( Math.random() * (3 + 1 - 1) ) + 1 ;//３種類の敵の中からランダムで決める
              if(Type == 1){
                 var Enemy = new enemy1();
              }else if(Type == 2){
@@ -211,11 +216,11 @@ scene.backgroundColor  = "#A0D8EF";
              scene.addChild(Enemy);
              enemylist.push(Enemy);
          }
-         if(game.frame > 600){//600フレーム過ぎたらクマの女の子を出す
+         if(game.frame > 60){//600フレーム過ぎたらクマの女の子を出す
              scene.addChild(girl);
          }
          if(bear.within(girl,20)){//女の子の当たり判定
-             gameover();
+             gameclear();
          }
          for(var i = 0, len = enemylist.length;i<len;++i){//敵当たり判定
              var Enemy = enemylist[i]
